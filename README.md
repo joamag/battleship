@@ -2,7 +2,9 @@
 
 Simple Battleship game in Python.
 
-This is a simple naive implementation with dynamic grid support.
+<img src="res/videos/001-demo.gif" width="460" />
+
+This is a simple implementation with dynamic grid support (defaults to 10x10).
 
 ## Challenge
 
