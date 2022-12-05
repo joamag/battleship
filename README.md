@@ -18,7 +18,7 @@ The player enters coordinates of the form “A5”, where "A" is the column and 
 ## Run
 
 ```bash
-pip3 install battleship
+pip3 install battleship-py
 python3 -m battleship
 ```
 
