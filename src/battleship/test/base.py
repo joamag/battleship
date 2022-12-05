@@ -27,4 +27,4 @@ class BaseTest(unittest.TestCase):
         self.assertEqual(self.game.pending, 0)
 
     def test_shoot(self):
-        self.assertNotEqual(self.game.shoot("a1"), None)
+        self.assertNotEqual(self.game.shoot("A1"), None)
