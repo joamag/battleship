@@ -2,7 +2,7 @@
 
 Simple Battleship game in Python.
 
-<img src="res/videos/001-demo.gif" width="460" />
+<img src="https://github.com/joamag/battleship/raw/master/res/videos/001-demo.gif" width="460" />
 
 This is a simple implementation with dynamic grid support (defaults to 10x10).
 
