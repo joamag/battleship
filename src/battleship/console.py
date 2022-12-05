@@ -1,4 +1,4 @@
-from .game import Battleship, Runnable
+from .game import SHIPS, Battleship, Runnable
 
 
 class BattleshipConsole(Runnable):
@@ -9,7 +9,8 @@ class BattleshipConsole(Runnable):
 
         while True:
             if game.finished:
-                print("You just won the game 🎉")
+                print(game._buffer(emoji=True))
+                print("You just won the game, congratulations 🎉")
                 break
 
             command = input("Coordinates to shoot (eg: A5) >> ")
@@ -51,8 +52,11 @@ class BattleshipConsole(Runnable):
 
             else:
                 try:
-                    position = game.shoot(command)
+                    result, position = game.shoot(command)
                 except Exception as exception:
                     print(exception)
                 else:
-                    print(f"You shot '{position}' {position.emoji}")
+                    if position.kind in SHIPS:
+                        print(f"You {result} a {position.kind} {position.kind.emoji}")
+                    else:
+                        print(f"You {result} ({position.kind}) {position.kind.emoji}")

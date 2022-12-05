@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from collections import namedtuple
 from enum import Enum
 from random import randrange
-from typing import Iterable, Tuple
+from typing import Iterable, NamedTuple, Tuple
 
 
 class Square(Enum):
@@ -12,35 +13,40 @@ class Square(Enum):
     BATTLESHIP = 3
     DESTROYER = 4
 
+    TEXT = dict(
+        WATER="water", DEBRIS="debris", BATTLESHIP="battleship", DESTROYER="destroyer"
+    )
+
+    EMOJI = dict(WATER="🌊", DEBRIS="🪵", BATTLESHIP="🚢", DESTROYER="⛵")
+
     def __repr__(self) -> str:
-        if self == Square.WATER:
-            return "Water"
-        elif self == Square.DEBRIS:
-            return "Debris"
-        elif self == Square.BATTLESHIP:
-            return "Battleship"
-        elif self == Square.DESTROYER:
-            return "Destroyer"
-        return "Invalid"
+        return self.__class__.TEXT.value.get(self.name, "Unknown")
 
     def __str__(self) -> str:
         return self.__repr__()
 
     @property
     def emoji(self):
-        if self == Square.WATER:
-            return "🌊"
-        elif self == Square.DEBRIS:
-            return "🪵"
-        elif self == Square.BATTLESHIP:
-            return "🚢"
-        elif self == Square.DESTROYER:
-            return "⛵"
+        return self.__class__.EMOJI.value.get(self.name, "?")
 
 
 class ShipSize(Enum):
     BATTLESHIP = 5
     DESTROYER = 4
+
+
+class Result(Enum):
+    MISS = 1
+    SHOT = 2
+    SINK = 3
+
+    TEXT = dict(MISS="missed", SHOT="shot", SINK="sank")
+
+    def __repr__(self) -> str:
+        return self.__class__.TEXT.value.get(self.name, "Unknown")
+
+    def __str__(self) -> str:
+        return self.__repr__()
 
 
 class Direction(Enum):
@@ -53,14 +59,19 @@ EMPTY = (Square.WATER, Square.DEBRIS)
 SHIPS = (Square.BATTLESHIP, Square.DESTROYER)
 
 
+class Position(NamedTuple):
+    kind: Square = Square.WATER
+    vessel_id: int = -1
+
+
 class Battleship:
     def __init__(self, size: Tuple[int, int] = (10, 10), allocate: bool = True) -> None:
         self.width, self.height = size
-        self.grid = [
-            [Square.WATER for value in range(self.width)]
-            for value in range(self.height)
+        self.grid: list[list[Position]] = [
+            [Position() for value in range(self.width)] for value in range(self.height)
         ]
-        self.pending = 0
+        self.vessel_id: int = 0
+        self.pending: dict[int, int] = dict()
         if allocate:
             self.allocate()
 
@@ -98,10 +109,10 @@ class Battleship:
                     x0 = randrange(0, self.width - size + 1)
                     y0 = randrange(0, self.height)
 
-                if self.fill(x0, y0, size, direction, value=ship):
+                vessel_id = self.fill(x0, y0, size, direction, value=ship)
+                if vessel_id:
+                    self.pending[vessel_id] = size
                     break
-
-            self.pending += size
 
     def fill(
         self,
@@ -110,29 +121,31 @@ class Battleship:
         size: int,
         direction: Direction,
         value: Square = Square.WATER,
-    ) -> bool:
+    ) -> int:
         x, y = x0, y0
 
         for _index in range(size):
-            if not self.grid[y][x] in EMPTY:
-                return False
+            if not self.grid[y][x].kind in EMPTY:
+                return 0
             if direction == direction.VERTICAL:
                 y += 1
             elif direction == direction.HORIZONTAL:
                 x += 1
 
+        self.vessel_id += 1
+
         x, y = x0, y0
 
         for _index in range(size):
-            self.grid[y][x] = value
+            self.grid[y][x] = Position(value, self.vessel_id)
             if direction == direction.VERTICAL:
                 y += 1
             elif direction == direction.HORIZONTAL:
                 x += 1
 
-        return True
+        return self.vessel_id
 
-    def shoot(self, coordinate: str) -> Square:
+    def shoot(self, coordinate: str) -> Tuple[Result, Position]:
         try:
             if not len(coordinate) in (2, 3):
                 raise Exception(f"Invalid length {len(coordinate)}")
@@ -149,14 +162,20 @@ class Battleship:
             for x in range(self.width):
                 self._shoot(x, y)
 
-    def _shoot(self, x: int, y: int) -> Square:
+    def _shoot(self, x: int, y: int) -> Tuple[Result, Position]:
+        result = Result.MISS
+
         position = self.grid[y][x]
 
-        if position in SHIPS:
-            self.grid[y][x] = Square.DEBRIS
-            self.pending -= 1
+        if position.kind in SHIPS:
+            self.grid[y][x] = Position(Square.DEBRIS, position.vessel_id)
+            self.pending[position.vessel_id] -= 1
+            if self.pending[position.vessel_id] == 0:
+                result = Result.SINK
+            else:
+                result = Result.SHOT
 
-        return position
+        return (result, position)
 
     def _buffer(self, emoji: bool = False, axis: bool = True) -> str:
         buffer = []
@@ -173,14 +192,14 @@ class Battleship:
                 buffer.append(f"{str(y + 1).rjust(2, ' ')} ")
             for x in range(self.width):
                 position = self.grid[y][x]
-                value = position.emoji if emoji else position.value
+                value = position.kind.emoji if emoji else position.kind.value
                 buffer.append(f"{value}")
             buffer.append("\n")
         return "".join(buffer).rstrip()
 
     @property
     def finished(self):
-        return self.pending == 0
+        return sum(value for value in self.pending.values()) == 0
 
 
 class Runnable:
