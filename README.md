@@ -31,7 +31,7 @@ python3 -m battleship
 | DESTROY | Destroys the game by shooting all the vessels.   |
 | PRINT   | Prints the current state of the game to console. |
 | EMOJI   | Prints the emoji version of the state.           |
-| (X)(Y)  | Shoots the target coordinate (eg: A5).           |
+| (X)(Y)  | Shoots the target at coordinate (eg: A5).        |
 
 ## Build Automation
 

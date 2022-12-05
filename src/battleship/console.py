@@ -34,7 +34,7 @@ class BattleshipConsole(Runnable):
                     f"{'EMOJI'.rjust(10, ' ')} - Prints the emoji version of the state"
                 )
                 print(
-                    f"{'[X][Y]'.rjust(10, ' ')} - Shoots the target coordinate (eg: A5)"
+                    f"{'[X][Y]'.rjust(10, ' ')} - Shoots the target at coordinate (eg: A5)"
                 )
 
             elif command == "EXIT":
