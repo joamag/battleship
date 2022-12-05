@@ -31,11 +31,11 @@ class Square(Enum):
         if self == Square.WATER:
             return "🌊"
         elif self == Square.DEBRIS:
-            return "🌊"
+            return "🪵"
         elif self == Square.BATTLESHIP:
             return "🚢"
         elif self == Square.DESTROYER:
-            return "🚢"
+            return "⛵"
 
 
 class ShipSize(Enum):
@@ -158,15 +158,21 @@ class Battleship:
 
         return position
 
-    def _buffer(self, emoji: bool = False) -> str:
+    def _buffer(self, emoji: bool = False, axis: bool = True) -> str:
         buffer = []
+        if axis:
+            buffer.append("   ")
+            buffer.append((" " if emoji else "").join(chr(index + 65) for index in range(self.width)))
+            buffer.append("\n")
         for y in range(self.height):
+            if axis:
+                buffer.append(f"{str(y + 1).rjust(2, ' ')} ")
             for x in range(self.width):
                 position = self.grid[y][x]
                 value = position.emoji if emoji else position.value
                 buffer.append(f"{value}")
             buffer.append("\n")
-        return "".join(buffer)
+        return "".join(buffer).rstrip()
 
     @property
     def finished(self):
