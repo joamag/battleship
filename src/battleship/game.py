@@ -162,7 +162,11 @@ class Battleship:
         buffer = []
         if axis:
             buffer.append("   ")
-            buffer.append((" " if emoji else "").join(chr(index + 65) for index in range(self.width)))
+            buffer.append(
+                (" " if emoji else "").join(
+                    chr(index + 65) for index in range(self.width)
+                )
+            )
             buffer.append("\n")
         for y in range(self.height):
             if axis:
