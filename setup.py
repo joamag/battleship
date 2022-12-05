@@ -12,7 +12,7 @@ setuptools.setup(
     description="Simple Battleship game",
     license="Apache License, Version 2.0",
     keywords="game battleship",
-    url="http://joao.me",
+    url="https://github.com/joamag/battleship",
     zip_safe=False,
     packages=["battleship", "battleship.test"],
     test_suite="battleship.test",
