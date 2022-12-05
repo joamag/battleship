@@ -76,7 +76,7 @@ class Battleship:
             self.allocate()
 
     def __repr__(self) -> str:
-        return self._repr(emoji=False)
+        return self.repr(emoji=False)
 
     def __str__(self) -> str:
         return self.__repr__()
@@ -162,22 +162,7 @@ class Battleship:
             for x in range(self.width):
                 self._shoot(x, y)
 
-    def _shoot(self, x: int, y: int) -> Tuple[Result, Position]:
-        result = Result.MISS
-
-        position = self.grid[y][x]
-
-        if position.kind in SHIPS:
-            self.grid[y][x] = Position(Square.DEBRIS, position.vessel_id)
-            self.pending[position.vessel_id] -= 1
-            if self.pending[position.vessel_id] == 0:
-                result = Result.SINK
-            else:
-                result = Result.SHOT
-
-        return (result, position)
-
-    def _repr(self, emoji: bool = False, axis: bool = True) -> str:
+    def repr(self, emoji: bool = False, axis: bool = True) -> str:
         buffer = []
         if axis:
             buffer.append("   ")
@@ -196,6 +181,21 @@ class Battleship:
                 buffer.append(f"{value}")
             buffer.append("\n")
         return "".join(buffer).rstrip()
+
+    def _shoot(self, x: int, y: int) -> Tuple[Result, Position]:
+        result = Result.MISS
+
+        position = self.grid[y][x]
+
+        if position.kind in SHIPS:
+            self.grid[y][x] = Position(Square.DEBRIS, position.vessel_id)
+            self.pending[position.vessel_id] -= 1
+            if self.pending[position.vessel_id] == 0:
+                result = Result.SINK
+            else:
+                result = Result.SHOT
+
+        return (result, position)
 
     @property
     def finished(self):

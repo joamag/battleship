@@ -9,7 +9,7 @@ class BattleshipConsole(Runnable):
 
         while True:
             if game.finished:
-                print(game._buffer(emoji=True))
+                print(game.repr(emoji=True))
                 print("You just won the game, congratulations 🎉")
                 break
 
@@ -48,7 +48,7 @@ class BattleshipConsole(Runnable):
                 print(game)
 
             elif command == "EMOJI":
-                print(game._buffer(emoji=True))
+                print(game.repr(emoji=True))
 
             else:
                 try:

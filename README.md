@@ -22,6 +22,17 @@ pip3 install battleship-py
 python3 -m battleship
 ```
 
+## Commands
+
+| Name    | Description                                      |
+| ------- | ------------------------------------------------ |
+| HELP    | Prints an help message about the commands.       |
+| QUIT    | Quits the Battleship game.                       |
+| DESTROY | Destroys the game by shooting all the vessels.   |
+| PRINT   | Prints the current state of the game to console. |
+| EMOJI   | Prints the emoji version of the state.           |
+| (X)(Y)  | Shoots the target coordinate (eg: A5).           |
+
 ## Build Automation
 
 [![Build Status](https://github.com/joamag/battleship/workflows/Main%20Workflow/badge.svg)](https://github.com/joamag/battleship/actions)
