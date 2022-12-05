@@ -14,17 +14,17 @@ class BaseTest(unittest.TestCase):
         pass
 
     def test_initial(self):
-        self.assertEqual(self.game.pending, 0)
+        self.assertEqual(self.game.all_pending, 0)
 
     def test_allocate(self):
         self.game.allocate()
-        self.assertEqual(self.game.pending, 13)
+        self.assertEqual(self.game.all_pending, 13)
 
         self.game.allocate()
-        self.assertEqual(self.game.pending, 26)
+        self.assertEqual(self.game.all_pending, 26)
 
         self.game.destroy()
-        self.assertEqual(self.game.pending, 0)
+        self.assertEqual(self.game.all_pending, 0)
 
     def test_shoot(self):
         self.assertNotEqual(self.game.shoot("A1"), None)

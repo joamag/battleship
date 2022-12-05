@@ -199,7 +199,11 @@ class Battleship:
 
     @property
     def finished(self):
-        return sum(value for value in self.pending.values()) == 0
+        return self.all_pending == 0
+
+    @property
+    def all_pending(self):
+        return sum(value for value in self.pending.values())
 
 
 class Runnable:
