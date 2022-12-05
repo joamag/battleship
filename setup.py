@@ -6,7 +6,7 @@ import setuptools
 
 setuptools.setup(
     name="battleship-py",
-    version="0.1.1",
+    version="0.1.2",
     author="João Magalhães",
     author_email="joamag@gmail.com",
     description="Simple Battleship game",
