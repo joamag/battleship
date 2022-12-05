@@ -76,7 +76,7 @@ class Battleship:
             self.allocate()
 
     def __repr__(self) -> str:
-        return self._buffer(emoji=False)
+        return self._repr(emoji=False)
 
     def __str__(self) -> str:
         return self.__repr__()
@@ -177,7 +177,7 @@ class Battleship:
 
         return (result, position)
 
-    def _buffer(self, emoji: bool = False, axis: bool = True) -> str:
+    def _repr(self, emoji: bool = False, axis: bool = True) -> str:
         buffer = []
         if axis:
             buffer.append("   ")
