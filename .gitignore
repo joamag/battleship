@@ -5,4 +5,6 @@
 
 /.vscode/settings.json
 
+/dist
+/build
 /src/battleship_py.egg-info
