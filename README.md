@@ -21,3 +21,7 @@ The player enters coordinates of the form “A5”, where "A" is the column and 
 pip3 install battleship
 python3 -m battleship
 ```
+
+## Build Automation
+
+[![Build Status](https://github.com/joamag/battleship/workflows/Main%20Workflow/badge.svg)](https://github.com/joamag/battleship/actions)
