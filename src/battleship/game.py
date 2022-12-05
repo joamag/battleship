@@ -140,7 +140,7 @@ class Battleship:
             x = ord(coordinate[0]) - 65
             y = int(coordinate[1:]) - 1
 
-            return self._shoot(x, y)    
+            return self._shoot(x, y)
         except:
             raise Exception(f"Invalid coordinate '{coordinate}'")
 
