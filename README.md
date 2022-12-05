@@ -36,3 +36,5 @@ python3 -m battleship
 ## Build Automation
 
 [![Build Status](https://github.com/joamag/battleship/workflows/Main%20Workflow/badge.svg)](https://github.com/joamag/battleship/actions)
+[![PyPi Status](https://img.shields.io/pypi/v/battleship-py.svg)](https://pypi.python.org/pypi/battleship-py)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/)
