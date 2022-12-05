@@ -1,0 +1,8 @@
+*.env
+*.pyc
+
+.DS_Store
+
+/.vscode/settings.json
+
+/src/battleship_py.egg-info
