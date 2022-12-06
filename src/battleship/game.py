@@ -71,7 +71,7 @@ class Battleship:
             [Position() for value in range(self.width)] for value in range(self.height)
         ]
         self.pending: dict[int, int] = dict()
-        self.vessel_id: int = 0
+        self.vessel_counter: int = 0
         if allocate:
             self.allocate()
 
@@ -110,7 +110,7 @@ class Battleship:
                     y0 = randrange(0, self.height)
 
                 vessel_id = self.fill(x0, y0, size, direction, value=ship)
-                if vessel_id:
+                if not vessel_id == -1:
                     self.pending[vessel_id] = size
                     break
 
@@ -126,24 +126,25 @@ class Battleship:
 
         for _index in range(size):
             if not self.grid[y][x].kind in EMPTY:
-                return 0
+                return -1
             if direction == Direction.VERTICAL:
                 y += 1
             elif direction == Direction.HORIZONTAL:
                 x += 1
 
-        self.vessel_id += 1
+        vessel_id = self.vessel_counter
+        self.vessel_counter += 1
 
         x, y = x0, y0
 
         for _index in range(size):
-            self.grid[y][x] = Position(value, self.vessel_id)
+            self.grid[y][x] = Position(value, vessel_id)
             if direction == Direction.VERTICAL:
                 y += 1
             elif direction == Direction.HORIZONTAL:
                 x += 1
 
-        return self.vessel_id
+        return vessel_id
 
     def shoot(self, coordinate: str) -> Tuple[Result, Position]:
         try:
