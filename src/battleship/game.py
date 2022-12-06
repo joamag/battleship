@@ -101,11 +101,11 @@ class Battleship:
                     else Direction.HORIZONTAL
                 )
 
-                if direction == direction.VERTICAL:
+                if direction == Direction.VERTICAL:
                     x0 = randrange(0, self.width)
                     y0 = randrange(0, self.height - size + 1)
 
-                elif direction == direction.HORIZONTAL:
+                elif direction == Direction.HORIZONTAL:
                     x0 = randrange(0, self.width - size + 1)
                     y0 = randrange(0, self.height)
 
@@ -127,9 +127,9 @@ class Battleship:
         for _index in range(size):
             if not self.grid[y][x].kind in EMPTY:
                 return 0
-            if direction == direction.VERTICAL:
+            if direction == Direction.VERTICAL:
                 y += 1
-            elif direction == direction.HORIZONTAL:
+            elif direction == Direction.HORIZONTAL:
                 x += 1
 
         self.vessel_id += 1
@@ -138,9 +138,9 @@ class Battleship:
 
         for _index in range(size):
             self.grid[y][x] = Position(value, self.vessel_id)
-            if direction == direction.VERTICAL:
+            if direction == Direction.VERTICAL:
                 y += 1
-            elif direction == direction.HORIZONTAL:
+            elif direction == Direction.HORIZONTAL:
                 x += 1
 
         return self.vessel_id
