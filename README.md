@@ -1,6 +1,6 @@
 # Battleship 🛥️
 
-Simple Battleship game in Python.
+Simple Battleship game written in Python 🐍.
 
 <img src="https://github.com/joamag/battleship/raw/master/res/videos/001-demo.gif" width="460" />
 
