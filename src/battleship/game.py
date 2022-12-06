@@ -70,8 +70,8 @@ class Battleship:
         self.grid: list[list[Position]] = [
             [Position() for value in range(self.width)] for value in range(self.height)
         ]
-        self.vessel_id: int = 0
         self.pending: dict[int, int] = dict()
+        self.vessel_id: int = 0
         if allocate:
             self.allocate()
 
