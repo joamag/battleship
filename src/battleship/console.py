@@ -3,10 +3,10 @@ from .game import SHIPS, Battleship, Runnable
 
 class BattleshipConsole(Runnable):
     def run(self):
-        game = Battleship()
-
         print("Welcome to Battleship 🛥️")
         print("You can use the HELP command to obtain help")
+
+        game = Battleship()
 
         while True:
             if game.finished:
