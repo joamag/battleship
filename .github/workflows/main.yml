@@ -25,3 +25,7 @@ jobs:
         name: Verify code format with black
       - run: python setup.py test
         name: Run unit tests
+      - run: |
+          pip install pytest
+          pytest --doctest-modules
+        name: Run unit tests with pytest

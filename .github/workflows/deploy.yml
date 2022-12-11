@@ -25,6 +25,10 @@ jobs:
       - run: python setup.py test
         name: Run unit tests
       - run: |
+          pip install pytest
+          pytest --doctest-modules
+        name: Run unit tests with pytest
+      - run: |
           pip install twine wheel
           python setup.py sdist bdist_wheel
         name: Build Python packages
