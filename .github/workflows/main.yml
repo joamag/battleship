@@ -13,19 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     container: python:${{ matrix.python-version }}
     steps:
-      - uses: actions/checkout@v1
-        name: Checkout code from repository
-      - run: python --version
-        name: Python version
-      - run: pip install -r requirements.txt
-        name: Install Python dependencies
-      - run: |
+      - name: Checkout code from repository
+        uses: actions/checkout@v3
+      - name: Print Python information
+        run: python --version
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Verify code format with black
+        run: |
           pip install black
           black . --check
-        name: Verify code format with black
-      - run: python setup.py test
-        name: Run unit tests
-      - run: |
+      - name: Run unit tests
+        run: python setup.py test
+      - name: Run unit tests with pytest
+        run: |
           pip install pytest
           pytest
-        name: Run unit tests with pytest

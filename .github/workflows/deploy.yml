@@ -12,28 +12,28 @@ jobs:
     runs-on: ubuntu-latest
     container: python:${{ matrix.python-version }}
     steps:
-      - uses: actions/checkout@v1
-        name: Checkout code from repository
-      - run: python --version
-        name: Python version
-      - run: pip install -r requirements.txt
-        name: Install Python dependencies
-      - run: |
+      - name: Checkout code from repository
+        uses: actions/checkout@v3
+      - name: Print Python information
+        run: python --version      
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Verify code format with black
+        run: |
           pip install black
           black . --check
-        name: Verify code format with black
-      - run: python setup.py test
-        name: Run unit tests
-      - run: |
+      - name: Run unit tests
+        run: python setup.py test
+      - name: Run unit tests with pytest
+        run: |
           pip install pytest
           pytest
-        name: Run unit tests with pytest
-      - run: |
+      - name: Build Python packages
+        run: |
           pip install twine wheel
-          python setup.py sdist bdist_wheel
-        name: Build Python packages
-      - run: python -m twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} dist/*
+          python setup.py sdist bdist_wheel      
+      - name: Deploy Python packages to PyPI
+        run: python -m twine upload -u ${PYPI_USERNAME} -p ${PYPI_PASSWORD} dist/*
         env:
           PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
           PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-        name: Deploy Python packages to PyPI
