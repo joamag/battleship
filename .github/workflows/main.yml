@@ -27,5 +27,5 @@ jobs:
         name: Run unit tests
       - run: |
           pip install pytest
-          pytest --doctest-modules
+          pytest
         name: Run unit tests with pytest
