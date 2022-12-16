@@ -23,6 +23,12 @@ jobs:
         run: |
           pip install black
           black . --check
+      - name: Verify code linting with pylint
+        run: |
+          pip install pylint
+          cd src
+          PYTHONPATH=. pylint --disable=R,C *
+          cd ..
       - name: Run unit tests
         run: python setup.py test
       - name: Run unit tests with pytest

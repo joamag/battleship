@@ -54,8 +54,8 @@ class BattleshipConsole(Runnable):
             else:
                 try:
                     result, position = game.shoot(command)
-                except Exception as exception:
-                    print(exception)
+                except ValueError as error:
+                    print(error)
                 else:
                     if position.kind in SHIPS:
                         print(f"{position.kind.emoji} You {result} a {position.kind}")

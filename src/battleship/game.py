@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from collections import namedtuple
 from enum import Enum
 from random import randrange
 from typing import Iterable, NamedTuple, Tuple
@@ -155,8 +154,8 @@ class Battleship:
             y = int(coordinate[1:]) - 1
 
             return self._shoot(x, y)
-        except:
-            raise Exception(f"Invalid coordinate '{coordinate}'")
+        except Exception as exception:
+            raise ValueError(f"Invalid coordinate '{coordinate}'") from exception
 
     def destroy(self):
         for y in range(self.height):
@@ -209,4 +208,4 @@ class Battleship:
 
 class Runnable:
     def run(self):
-        raise NotImplemented("Running logic is not implemented")
+        raise NotImplementedError("Running logic is not implemented")
