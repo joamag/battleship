@@ -29,6 +29,7 @@ jobs:
           cd src
           PYTHONPATH=. pylint --disable=R,C *
           cd ..
+        if: matrix.python-version == '3.11'
       - name: Run unit tests
         run: python setup.py test
       - name: Run unit tests with pytest
