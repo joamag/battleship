@@ -91,7 +91,7 @@ class Battleship:
         for ship in ships:
             x0, y0 = -1, -1
 
-            size = ShipSize[ship.name].value
+            size: int = ShipSize[ship.name].value
 
             while True:
                 direction = (
@@ -177,7 +177,7 @@ class Battleship:
                 buffer.append(f"{str(y + 1).rjust(2, ' ')} ")
             for x in range(self.width):
                 position = self.grid[y][x]
-                value = position.kind.emoji if emoji else position.kind.value
+                value = position.kind.emoji if emoji else str(position.kind.value)
                 buffer.append(f"{value}")
             buffer.append("\n")
         return "".join(buffer).rstrip()
