@@ -148,7 +148,7 @@ class Battleship:
     def shoot(self, coordinate: str) -> Tuple[Result, Position]:
         try:
             if not len(coordinate) in (2, 3):
-                raise Exception(f"Invalid length {len(coordinate)}")
+                raise RuntimeError(f"Invalid length {len(coordinate)}")
 
             x = ord(coordinate[0]) - 65
             y = int(coordinate[1:]) - 1
